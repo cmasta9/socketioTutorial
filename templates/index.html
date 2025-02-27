@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flask SocketIO Tutorial</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+        <script type="text/javascript">
+
+            const socket = io.connect('ws://'+ document.domain + ':' + location.port);
+
+            socket.addEventListener('connect',()=>{
+                sendMess('Hello server, I am a client.');
+            });
+
+            socket.addEventListener('response',(e)=>{
+                const elem = document.createElement('p');
+                elem.innerText = e;
+                document.getElementById('cont').appendChild(elem);
+            });
+
+            function sendMess(mess=document.getElementById('tb').value){
+                socket.emit('message',mess);
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Flask SocketIO Tutorial</h1>
+        <input type="text" id="tb" placeholder="Type a message here...">
+        <button id="send" onclick="sendMess()">Send</button>
+        <br>
+        <div id="cont"></div>
+    </body>
+</html>
